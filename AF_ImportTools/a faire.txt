@@ -1,0 +1,2 @@
+﻿ajouter un modatory sur le datamodel
+ajouter log4net (voir pascal, damien)

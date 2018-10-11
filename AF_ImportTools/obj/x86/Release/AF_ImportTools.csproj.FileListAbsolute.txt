@@ -1,0 +1,15 @@
+C:\AlmaCAM\Bin\AF_ImportTools.cs
+C:\AlmaCAM\Bin\AF_ImportTools.dll
+C:\AlmaCAM\Bin\AF_ImportTools.pdb
+C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.csprojResolveAssemblyReference.cache
+C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.Properties.Resources.resources
+C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.csproj.GenerateResource.cache
+C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.csproj.CoreCompileInputs.cache
+C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.dll
+C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.pdb
+C:\Users\alma\source\DEV\CLIPPER\SP3\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.csprojResolveAssemblyReference.cache
+C:\Users\alma\source\DEV\CLIPPER\SP3\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.Properties.Resources.resources
+C:\Users\alma\source\DEV\CLIPPER\SP3\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.csproj.GenerateResource.cache
+C:\Users\alma\source\DEV\CLIPPER\SP3\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.csproj.CoreCompileInputs.cache
+C:\Users\alma\source\DEV\CLIPPER\SP3\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.dll
+C:\Users\alma\source\DEV\CLIPPER\SP3\Interface_generique\ImportTools\obj\x86\Release\AF_ImportTools.pdb

@@ -1,0 +1,53 @@
+﻿using System;
+using System.Diagnostics;
+
+using Wpm.Implement.Manager;
+
+using Actcut.ActcutModelManager;
+
+namespace Actcut.ActcutModelManager
+{
+    public class MyAutoToolingFormula : AutoToolingFormula
+    {
+        public override void Execute(DrafterModule drafter)
+        {
+            int tooling;
+            int profile;
+            int element;
+            int type;
+
+            profile = drafter.FirstProfile(out tooling);
+            while (profile > 0)
+            {
+                double xMin; double yMin; double xMax; double yMax;
+                drafter.GetProfileDimension(profile, out xMin, out yMin, out xMax, out yMax);
+
+                double surface = drafter.GetProfileSurface(profile);
+                double perimeter = drafter.GetProfilePerimeter(profile);
+
+                bool isClosed = drafter.IsClosedProfile(profile);
+                bool isRightMaterial = drafter.IsRightMaterialProfile(profile);
+                bool isExternal = drafter.IsExternalProfile(profile);
+
+                if (isExternal == false && tooling == 2)
+                {
+                    drafter.SetProfileTooling(profile, 1, 1);
+                }
+
+                element = drafter.FirstElement(profile, out type);
+                while (element > 0)
+                {
+                    double xStart; double yStart; double xEnd; double yEnd; double xCenter; double yCenter; int antiClockWise;
+                    if (type == 0)
+                        drafter.GetLine(element, out xStart, out yStart, out xEnd, out yEnd);
+                    else
+                        drafter.GetArc(element, out xStart, out yStart, out xEnd, out yEnd, out xCenter, out yCenter, out  antiClockWise);
+
+                    element = drafter.NextElement(profile, element, out type);
+                }
+
+                profile = drafter.NextProfile(out tooling);
+            }
+        }
+    }
+}
