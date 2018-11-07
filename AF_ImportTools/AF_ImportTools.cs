@@ -1241,7 +1241,7 @@ namespace AF_ImportTools
                             height = (machinablePart.GetFieldValueAsDouble("_DIMENS1"));
                             width = machinablePart.GetFieldValueAsDouble("_DIMENS2");
                             emfFile = machinablePart.GetImageFieldValueAsLinkFile("_PREVIEW");
-
+                            
                             getCustomPartInfos(machinablePart);
                         }
 
@@ -2338,60 +2338,74 @@ namespace AF_ImportTools
         public virtual void Get_OffcutInfos(Nest_Infos_2 CurrentNesting)
         {
 
-                    
+
             //recuperation des chute de meme parent stock
-            IEntityList parentstocklist;
+            //IEntityList parentstocklist;
+            IEntityList sheets, stocks;
             Offcut_infos_List = new List<Tole>();
-            
+            /*
             parentstocklist = CurrentNesting.Tole_Nesting.StockEntity.Context.EntityManager.GetEntityList("_STOCK", "_PARENT_STOCK", ConditionOperator.Equal, CurrentNesting.Tole_Nesting.StockEntity.Id);///NestingStockEntity.Id);
-            parentstocklist.Fill(false);
+            parentstocklist.Fill(false);*/
+            //recuperation du sheet du placement 
+            sheets = CurrentNesting.Tole_Nesting.StockEntity.Context.EntityManager.GetEntityList("_SHEET", "_SEQUENCED_NESTING", ConditionOperator.Equal, CurrentNesting.NestingId);///NestingStockEntity.Id);
+            sheets.Fill(false);
+
             //construction de la liste des chutes
-            foreach (IEntity offcut in parentstocklist)
+            foreach (IEntity sheet in sheets)
             {
-                Tole offcut_tole = new Tole();
-                offcut_tole.StockEntity = offcut;
-                //ON VALIDE LES POINTS GENERIQUES  MEME MATIERE QUE LA TOLE DU PLACEMENT
-                offcut_tole.Material_Id = Tole_Nesting.Material_Id; //  Sheet_Material_Id;
-                offcut_tole.MaterialName = Tole_Nesting.MaterialName; // Sheet_MaterialName;
-                offcut_tole.Thickness = Tole_Nesting.Thickness;  //
+                stocks = CurrentNesting.Tole_Nesting.StockEntity.Context.EntityManager.GetEntityList("_STOCK", "_SHEET", ConditionOperator.Equal, sheet.Id);///NestingStockEntity.Id);
+                stocks.Fill(false);
 
-                offcut_tole.Grade = Tole_Nesting.Grade; //  Sheet_Material_Id;
-                offcut_tole.GradeName = Tole_Nesting.GradeName; // Sheet_MaterialName;
 
-                ///sheet
-                offcut_tole.SheetEntity = offcut.GetFieldValueAsEntity("_SHEET");
-                offcut_tole.Sheet_Id = offcut_tole.SheetEntity.Id;
-                offcut_tole.Sheet_Name = offcut_tole.SheetEntity.GetFieldValueAsString("_NAME");
-                offcut_tole.Sheet_Reference = offcut_tole.SheetEntity.GetFieldValueAsString("_REFERENCE");
-                offcut_tole.Sheet_Surface = offcut_tole.SheetEntity.GetFieldValueAsDouble("_SURFACE");
-                //pour la tole totalsurface = surface
+                foreach (IEntity offcut in stocks)
+                {
 
-                offcut_tole.Sheet_Length = offcut_tole.SheetEntity.GetFieldValueAsDouble("_LENGTH");
-                offcut_tole.Sheet_Width = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WIDTH");
-                offcut_tole.Sheet_Weight = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WEIGHT");
-                //pour la tole totalweight= weigth
-
-                //offcut_tole.Sheet_EmfFile = offcut_tole.SheetEntity.GetImageFieldValueAsLinkFile("_PREVIEW");
-                offcut_tole.Sheet_EmfFile = SimplifiedMethods.GetPreview(offcut_tole.SheetEntity);
-                offcut_tole.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
-                /////
-                if (offcut != null) {
-                    ////stock 
+                    Tole offcut_tole = new Tole();
                     offcut_tole.StockEntity = offcut;
-                    ///////on egalise la multiplicité avec celle de la tole mere (a verifier si fiable)
-                    offcut_tole.Mutliplicity =CurrentNesting.Tole_Nesting.Mutliplicity;
-                    offcut_tole.Stock_Name = offcut.GetFieldValueAsString("_NAME");
-                    offcut_tole.Stock_Coulee = offcut.GetFieldValueAsString("_HEAT_NUMBER");
-                    offcut_tole.Stock_qte_initiale = offcut.GetFieldValueAsInt("_QUANTITY");
-                    offcut_tole.Stock_qte_reservee = offcut.GetFieldValueAsInt("_BOOKED_QUANTITY");
-                    offcut_tole.Stock_qte_Utilisee = offcut.GetFieldValueAsInt("_USED_QUANTITY");
-                    
-                    Tole_Nesting.no_Offcuts = false;
-                    Tole_Nesting.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
-                    //////
-                    Offcut_infos_List.Add(offcut_tole);
+                    //ON VALIDE LES POINTS GENERIQUES  MEME MATIERE QUE LA TOLE DU PLACEMENT
+                    offcut_tole.Material_Id = Tole_Nesting.Material_Id; //  Sheet_Material_Id;
+                    offcut_tole.MaterialName = Tole_Nesting.MaterialName; // Sheet_MaterialName;
+                    offcut_tole.Thickness = Tole_Nesting.Thickness;  //
+
+                    offcut_tole.Grade = Tole_Nesting.Grade; //  Sheet_Material_Id;
+                    offcut_tole.GradeName = Tole_Nesting.GradeName; // Sheet_MaterialName;
+
+                    ///sheet
+                    offcut_tole.SheetEntity = offcut.GetFieldValueAsEntity("_SHEET");
+                    offcut_tole.Sheet_Id = offcut_tole.SheetEntity.Id;
+                    offcut_tole.Sheet_Name = offcut_tole.SheetEntity.GetFieldValueAsString("_NAME");
+                    offcut_tole.Sheet_Reference = offcut_tole.SheetEntity.GetFieldValueAsString("_REFERENCE");
+                    offcut_tole.Sheet_Surface = offcut_tole.SheetEntity.GetFieldValueAsDouble("_SURFACE");
+                    //pour la tole totalsurface = surface
+
+                    offcut_tole.Sheet_Length = offcut_tole.SheetEntity.GetFieldValueAsDouble("_LENGTH");
+                    offcut_tole.Sheet_Width = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WIDTH");
+                    offcut_tole.Sheet_Weight = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WEIGHT");
+                    //pour la tole totalweight= weigth
+
+                    //offcut_tole.Sheet_EmfFile = offcut_tole.SheetEntity.GetImageFieldValueAsLinkFile("_PREVIEW");
+                    offcut_tole.Sheet_EmfFile = SimplifiedMethods.GetPreview(offcut_tole.SheetEntity);
+                    offcut_tole.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
+                    /////
+                    if (offcut != null)
+                    {
+                        ////stock 
+                        offcut_tole.StockEntity = offcut;
+                        ///////on egalise la multiplicité avec celle de la tole mere (a verifier si fiable)
+                        offcut_tole.Mutliplicity = CurrentNesting.Tole_Nesting.Mutliplicity;
+                        offcut_tole.Stock_Name = offcut.GetFieldValueAsString("_NAME");
+                        offcut_tole.Stock_Coulee = offcut.GetFieldValueAsString("_HEAT_NUMBER");
+                        offcut_tole.Stock_qte_initiale = offcut.GetFieldValueAsInt("_QUANTITY");
+                        offcut_tole.Stock_qte_reservee = offcut.GetFieldValueAsInt("_BOOKED_QUANTITY");
+                        offcut_tole.Stock_qte_Utilisee = offcut.GetFieldValueAsInt("_USED_QUANTITY");
+
+                        Tole_Nesting.no_Offcuts = false;
+                        Tole_Nesting.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
+                        //////
+                        Offcut_infos_List.Add(offcut_tole);
+                    }
+                    else { Tole_Nesting.no_Offcuts = true; }
                 }
-                else { Tole_Nesting.no_Offcuts = true; }
             }
 
 
@@ -2409,61 +2423,73 @@ namespace AF_ImportTools
                 case   WorkShopOptionType.GlobalCloseOneClic:
 
                     //recuperation des infos commune des chutes chutes de meme parent stock
-                    IEntityList parentstocklist;                  
-
+                    //IEntityList parentstocklist;
+                    /*
                     parentstocklist = CurrentNesting.Tole_Nesting.StockEntity.Context.EntityManager.GetEntityList("_STOCK", "_PARENT_STOCK", ConditionOperator.Equal, CurrentNesting.Tole_Nesting.StockEntity.Id);///NestingStockEntity.Id);
-                    parentstocklist.Fill(false);
+                    parentstocklist.Fill(false);*/
+
+                    IEntityList sheets, stocks;
+                    sheets = CurrentNesting.Tole_Nesting.StockEntity.Context.EntityManager.GetEntityList("_SHEET", "_SEQUENCED_NESTING", ConditionOperator.Equal, CurrentNesting.NestingId);///NestingStockEntity.Id);
+                    sheets.Fill(false);
                     //construction de la liste des chutes
-                    foreach (IEntity offcut in parentstocklist)
+                    foreach (IEntity sheet in sheets)
                     {
-                       
-                        Tole offcut_tole = new Tole();
-                        offcut_tole.StockEntity = offcut;
-                        //ON VALIDE LES POINTS GENERIQUES  MEME MATIERE QUE LA TOLE DU PLACEMENT
-                        offcut_tole.Material_Id = Tole_Nesting.Material_Id; //  Sheet_Material_Id;
-                        offcut_tole.MaterialName = Tole_Nesting.MaterialName; // Sheet_MaterialName;
-                        offcut_tole.Thickness = Tole_Nesting.Thickness;  //
-                        offcut_tole.Grade = Tole_Nesting.Grade; //  Sheet_Material_Id;
-                        offcut_tole.GradeName = Tole_Nesting.GradeName; // Sheet_MaterialName;
-                        ///sheet
-                        offcut_tole.SheetEntity = offcut.GetFieldValueAsEntity("_SHEET");
-                        offcut_tole.Sheet_Id = offcut_tole.SheetEntity.Id;
-                        offcut_tole.Sheet_Name = offcut_tole.SheetEntity.GetFieldValueAsString("_NAME");
-                        offcut_tole.Sheet_Reference = offcut_tole.SheetEntity.GetFieldValueAsString("_REFERENCE");
-                        offcut_tole.Sheet_Surface = offcut_tole.SheetEntity.GetFieldValueAsDouble("_SURFACE");
-                        offcut_tole.Sheet_Total_Surface= offcut_tole.SheetEntity.GetFieldValueAsDouble("_SURFACE")*CurrentNesting.NestingMultiplicity;
-                      
-                        //pour la tole totalsurface = surface
 
-                        offcut_tole.Sheet_Length = offcut_tole.SheetEntity.GetFieldValueAsDouble("_LENGTH");
-                        offcut_tole.Sheet_Width = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WIDTH");
-                        offcut_tole.Sheet_Weight = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WEIGHT");
-                        offcut_tole.Sheet_Total_Weight = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WEIGHT") * CurrentNesting.NestingMultiplicity;
+                        stocks = CurrentNesting.Tole_Nesting.StockEntity.Context.EntityManager.GetEntityList("_STOCK", "_SHEET", ConditionOperator.Equal, sheet.Id);///NestingStockEntity.Id);
+                        stocks.Fill(false);
 
-                        //pour la tole totalweight= weigth
 
-                        //offcut_tole.Sheet_EmfFile = offcut_tole.SheetEntity.GetImageFieldValueAsLinkFile("_PREVIEW");
-                        offcut_tole.Sheet_EmfFile = SimplifiedMethods.GetPreview(offcut_tole.SheetEntity);
-                        offcut_tole.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
-                        /////
-                        if (offcut != null)
+                        foreach (IEntity offcut in stocks)
                         {
-                            ////stock 
-                            offcut_tole.StockEntity = offcut;
-                            ///////on egalise la multiplicité avec celle de la tole mere (a verifier si fiable)
-                            offcut_tole.Mutliplicity = CurrentNesting.Tole_Nesting.Mutliplicity;
-                            offcut_tole.Stock_Name = offcut.GetFieldValueAsString("_NAME");
-                            offcut_tole.Stock_Coulee = offcut.GetFieldValueAsString("_HEAT_NUMBER");
-                            offcut_tole.Stock_qte_initiale = offcut.GetFieldValueAsInt("_QUANTITY");
-                            offcut_tole.Stock_qte_reservee = offcut.GetFieldValueAsInt("_BOOKED_QUANTITY");
-                            offcut_tole.Stock_qte_Utilisee = offcut.GetFieldValueAsInt("_USED_QUANTITY");
 
-                            Tole_Nesting.no_Offcuts = false;
-                            Tole_Nesting.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
-                            //////
-                            Offcut_infos_List.Add(offcut_tole);
+                            Tole offcut_tole = new Tole();
+                            offcut_tole.StockEntity = offcut;
+                            //ON VALIDE LES POINTS GENERIQUES  MEME MATIERE QUE LA TOLE DU PLACEMENT
+                            offcut_tole.Material_Id = Tole_Nesting.Material_Id; //  Sheet_Material_Id;
+                            offcut_tole.MaterialName = Tole_Nesting.MaterialName; // Sheet_MaterialName;
+                            offcut_tole.Thickness = Tole_Nesting.Thickness;  //
+                            offcut_tole.Grade = Tole_Nesting.Grade; //  Sheet_Material_Id;
+                            offcut_tole.GradeName = Tole_Nesting.GradeName; // Sheet_MaterialName;
+                                                                            ///sheet
+                            offcut_tole.SheetEntity = offcut.GetFieldValueAsEntity("_SHEET");
+                            offcut_tole.Sheet_Id = offcut_tole.SheetEntity.Id;
+                            offcut_tole.Sheet_Name = offcut_tole.SheetEntity.GetFieldValueAsString("_NAME");
+                            offcut_tole.Sheet_Reference = offcut_tole.SheetEntity.GetFieldValueAsString("_REFERENCE");
+                            offcut_tole.Sheet_Surface = offcut_tole.SheetEntity.GetFieldValueAsDouble("_SURFACE");
+                            offcut_tole.Sheet_Total_Surface = offcut_tole.SheetEntity.GetFieldValueAsDouble("_SURFACE") * CurrentNesting.NestingMultiplicity;
+
+                            //pour la tole totalsurface = surface
+
+                            offcut_tole.Sheet_Length = offcut_tole.SheetEntity.GetFieldValueAsDouble("_LENGTH");
+                            offcut_tole.Sheet_Width = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WIDTH");
+                            offcut_tole.Sheet_Weight = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WEIGHT");
+                            offcut_tole.Sheet_Total_Weight = offcut_tole.SheetEntity.GetFieldValueAsDouble("_WEIGHT") * CurrentNesting.NestingMultiplicity;
+
+                            //pour la tole totalweight= weigth
+
+                            //offcut_tole.Sheet_EmfFile = offcut_tole.SheetEntity.GetImageFieldValueAsLinkFile("_PREVIEW");
+                            offcut_tole.Sheet_EmfFile = SimplifiedMethods.GetPreview(offcut_tole.SheetEntity);
+                            offcut_tole.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
+                            /////
+                            if (offcut != null)
+                            {
+                                ////stock 
+                                offcut_tole.StockEntity = offcut;
+                                ///////on egalise la multiplicité avec celle de la tole mere (a verifier si fiable)
+                                offcut_tole.Mutliplicity = CurrentNesting.Tole_Nesting.Mutliplicity;
+                                offcut_tole.Stock_Name = offcut.GetFieldValueAsString("_NAME");
+                                offcut_tole.Stock_Coulee = offcut.GetFieldValueAsString("_HEAT_NUMBER");
+                                offcut_tole.Stock_qte_initiale = offcut.GetFieldValueAsInt("_QUANTITY");
+                                offcut_tole.Stock_qte_reservee = offcut.GetFieldValueAsInt("_BOOKED_QUANTITY");
+                                offcut_tole.Stock_qte_Utilisee = offcut.GetFieldValueAsInt("_USED_QUANTITY");
+
+                                Tole_Nesting.no_Offcuts = false;
+                                Tole_Nesting.Sheet_Is_rotated = CurrentNesting.IS_ROTATED;
+                                //////
+                                Offcut_infos_List.Add(offcut_tole);
+                            }
+                            else { Tole_Nesting.no_Offcuts = true; }
                         }
-                        else { Tole_Nesting.no_Offcuts = true; }
                     }
 
 
@@ -2471,7 +2497,7 @@ namespace AF_ImportTools
 
                 case WorkShopOptionType.GlobalCloseSeparated:
 
-                    IEntityList sheetList = CurrentNesting.Nesting.Context.EntityManager.GetEntityList("_SHEET", "_SEQUENCED_NESTING", ConditionOperator.Equal, CurrentNesting.Tole_Nesting.StockEntity.Id);///NestingStockEntity.Id);
+                    IEntityList sheetList = CurrentNesting.Nesting.Context.EntityManager.GetEntityList("_SHEET", "_SEQUENCED_NESTING", ConditionOperator.Equal, CurrentNesting.NestingId);//CurrentNesting.Tole_Nesting.StockEntity.Id);///NestingStockEntity.Id);
                     sheetList.Fill(false);
                     //construction de la liste des chutes
                     foreach (IEntity sheet in sheetList)

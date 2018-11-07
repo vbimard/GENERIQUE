@@ -12,3 +12,8 @@ C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Deb
 C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CoreCompileInputs.cache
 C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.dll
 C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.pdb
+C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.Properties.Resources.resources
+C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.GenerateResource.cache
+C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CoreCompileInputs.cache
+C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.dll
+C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.pdb
