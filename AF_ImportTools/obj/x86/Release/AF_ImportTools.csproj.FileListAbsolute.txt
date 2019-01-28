@@ -19,3 +19,9 @@ C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.dll
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.pdb
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.csprojResolveAssemblyReference.cache
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.Properties.Resources.resources
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.csproj.GenerateResource.cache
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.csproj.CoreCompileInputs.cache
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.dll
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.pdb
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Release\AF_ImportTools.csprojResolveAssemblyReference.cache
