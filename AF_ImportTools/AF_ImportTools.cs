@@ -2511,6 +2511,7 @@ namespace AF_ImportTools
                         offcut_tole.Thickness = Tole_Nesting.Thickness;  //
                         offcut_tole.Grade = Tole_Nesting.Grade; //  Sheet_Material_Id;
                         offcut_tole.GradeName = Tole_Nesting.GradeName; // Sheet_MaterialName;
+                        offcut_tole.Mutliplicity = Tole_Nesting.Mutliplicity;
                         //sheet
                         offcut_tole.SheetEntity = sheet; ///offcut.GetFieldValueAsEntity("_SHEET");
                         offcut_tole.Sheet_Id = offcut_tole.SheetEntity.Id;
