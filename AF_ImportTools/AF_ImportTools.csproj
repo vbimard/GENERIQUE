@@ -93,6 +93,11 @@
       <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\Actcut.CommonModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Actcut.CommonModelManager, Version=2.1.4.35644, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\AlmaCAM\Bin\Actcut.CommonModelManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Actcut.EstimationManager, Version=1.0.1.53042, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\AlmaCAM\Bin\Actcut.EstimationManager.dll</HintPath>
@@ -107,6 +112,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\AlmaCAM\Bin\Actcut.ResourceModel.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="AF_Toast_Notification">
+      <HintPath>..\..\..\..\..\AlmaCAM\Bin\AlmaCam_Clipper\DLL\SP4\AF_Toast_Notification.dll</HintPath>
     </Reference>
     <Reference Include="Alma.BaseUI, Version=2.1.0.43911, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -158,10 +166,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Resources\test_Entities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="a faire.txt" />
     <Content Include="get_profiles.txt" />
+    <Content Include="Memo_new.txt" />
+    <None Include="Resources\Wpm_32513.ico" />
+    <None Include="Resources\AlmaCamIcone.ico" />
+    <None Include="Resources\AlmaCamIcone.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -171,7 +184,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "C:\AlmaCAM\Bin\$(SolutionName).dll"  "C:\AlmaCAM\Bin\AlmaCam_Clipper\DLL\SP3\$(SolutionName).dll"</PostBuildEvent>
+    <PostBuildEvent>copy "C:\AlmaCAM\Bin\AF_ImportTools.dll"  "C:\AlmaCAM\Bin\AlmaCam_Clipper\DLL\SP5\AF_ImportTools.dll"
+copy "C:\AlmaCAM\Bin\AF_ImportTools.dll"  "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AF_ImportTools.dll"
+copy "C:\AlmaCAM\Bin\AF_ImportTools.dll"  "\\ALMA-FILES\Technique-AS\SOFT\AlmaCam\Template\Clipper\DEBUG_CLIPPER\debug_DLL\AF_ImportTools.dll"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

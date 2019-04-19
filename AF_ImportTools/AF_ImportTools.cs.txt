@@ -1,4 +1,465 @@
-﻿using System;
+﻿
+  #region nestinfos
+        /// <summary>
+        /// recupere les nestinfos infos de la tole mere
+        /// </summary>
+        /// <param name="currentsheet">t</param>
+        /// <param name="stage"></param>
+
+        public virtual void Get_NestInfos(IEntity nesting_to_cut)
+        {
+         
+        }
+        #endregion
+ 
+ 
+ 
+ 
+ public class Clipper_Sheet_Requirement : IDisposable
+        {
+
+
+
+            public void Export(IContext contextlocal)
+            {
+
+
+                //verification standards
+                //creation du timetag d'import
+                string timetag = string.Format("{0:d_M_yyyy_HH_mm_ss}", DateTime.Now);
+                Alma_Log.Create_Log(Clipper_Param.GetVerbose_Log());
+                //bool import_sans_donnee_technique = false;
+                Alma_Log.Write_Log(MethodBase.GetCurrentMethod().Name + ": importe tag :" + timetag);
+                //ouverture du fichier csv lancement du curseur
+                // Set cursor as hourglass
+                Cursor.Current = Cursors.WaitCursor;
+
+
+                //chargement de la liste de piece a retourner
+                Clipper_Param.GetlistParam(contextlocal);
+                string CsvExportPath = Clipper_Param.GetPath("SHEET_REQUIREMENT");
+
+                try
+                {
+
+
+
+                    string fileName = "Sheet_requirements.txt";
+                    string sourcePath = @"C:\temp\";
+                    Alma_Log.Write_Log(MethodBase.GetCurrentMethod().Name + ": importe tag :" + timetag);
+
+                    // Use Path class to manipulate file and directory paths.
+                    string sourceFile = System.IO.Path.Combine(sourcePath, fileName);
+                    string destFile = System.IO.Path.Combine(CsvExportPath, fileName);
+
+                    // To copy a folder's contents to a new location:
+                    // Create a new target folder, if necessary.
+                    if (!System.IO.Directory.Exists(CsvExportPath))
+                    {
+                        //System.IO.Directory.CreateDirectory(CsvExportPath);
+                        Alma_Log.Write_Log(MethodBase.GetCurrentMethod().Name + "--> Dossier d' Import non detecté :" + CsvExportPath);
+                    }
+                    //si pas de fichier de reference alors on en creer un
+
+                    if (!System.IO.File.Exists(sourceFile))
+                    {
+                        StreamWriter sr = new StreamWriter(sourceFile);
+                        string myline = "NS;TX;0;0;EMF1;38;1;SHEET_TYPE;OFFCUT;;44;7;12;";
+                        sr.WriteLine(myline.Replace(",", "."));
+                        sr.Close();
+                        sr.Dispose();
+                    }
+
+
+                    // To copy a file to another location and 
+                    // overwrite the destination file if it already exists.
+                    System.IO.File.Copy(sourceFile, destFile, true);
+                    Cursor.Current = Cursors.Default;
+                    Alma_Log.Final_Open_Log();
+
+                }
+                catch (Exception ie)
+                {
+
+                    MessageBox.Show(ie.Message);
+                    Cursor.Current = Cursors.Default;
+                    Alma_Log.Write_Log(ie.Message);
+                    Alma_Log.Final_Open_Log();
+                    //File_tools
+                }
+
+            }
+
+            public void Dispose()
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
+
+ public class Clipper_tole: Tole
+    {
+        
+        long QTE_TOT=0;
+        string FILENAME="";
+        string NUMCERTIF = "";
+        string IDCLIP = "";
+        string NUMMATLOT = "";
+        string NUMMAG = "";
+        string GISEMENT = "";
+        string NUMLOT = "";
+        string STOCK_IMPORT_NUMBER = "";
+        string NAF_LOTIE = "";
+      
+
+    }
+
+
+
+
+
+  /* SPECIFIQUE CLIPPER
+             public  void Get_Clipper_OffcutInfos()
+             {
+
+                 IEntityList sheets, stocks;
+                 Clipper_Offcut_Infos_List= new List<Clipper_tole>();
+
+                 if (Tole_Nesting.StockEntity != null)
+                 {
+
+                     sheets = Nesting.Context.EntityManager.GetEntityList("_TO_CUT_SHEET", "_TO_CUT_NESTING", ConditionOperator.Equal, Nesting.Id);
+                     sheets.Fill(false);
+
+                     //construction de la liste des chutes
+                     foreach (IEntity sheet in sheets)
+                     {
+                         stocks = Nesting.Context.EntityManager.GetEntityList("_STOCK", "_SHEET", ConditionOperator.Equal, sheet.Id);///NestingStockEntity.Id);
+                         stocks.Fill(false);
+
+
+                         foreach (IEntity offcut in stocks)
+                         {
+
+
+
+                             Clipper_tole Clipper_offcut_tole = new Clipper_tole();
+                             Clipper_offcut_tole.StockEntity = offcut;
+                             //ON VALIDE LES POINTS GENERIQUES  MEME MATIERE QUE LA TOLE DU PLACEMENT
+                             Clipper_offcut_tole.Material_Id = Tole_Nesting.Material_Id; //  Sheet_Material_Id;
+                             Clipper_offcut_tole.MaterialName = Tole_Nesting.MaterialName; // Sheet_MaterialName;
+                             Clipper_offcut_tole.Thickness = Tole_Nesting.Thickness;  //
+                             Clipper_offcut_tole.Grade = Tole_Nesting.Grade; //  Sheet_Material_Id;
+                             Clipper_offcut_tole.GradeName = Tole_Nesting.GradeName; // Sheet_MaterialName;
+                             ///sheet
+                             Clipper_offcut_tole.SheetEntity = offcut.GetFieldValueAsEntity("_SHEET");
+                             Clipper_offcut_tole.Sheet_Id = Clipper_offcut_tole.SheetEntity.Id;
+                             Clipper_offcut_tole.Sheet_Name = Clipper_offcut_tole.SheetEntity.GetFieldValueAsString("_NAME");
+                             Clipper_offcut_tole.Sheet_Reference = Clipper_offcut_tole.SheetEntity.GetFieldValueAsString("_REFERENCE");
+                             Clipper_offcut_tole.Sheet_Surface = Clipper_offcut_tole.SheetEntity.GetFieldValueAsDouble("_SURFACE");
+                             //pour la tole totalsurface = surface
+                             Clipper_offcut_tole.Sheet_Length = Clipper_offcut_tole.SheetEntity.GetFieldValueAsDouble("_LENGTH");
+                             Clipper_offcut_tole.Sheet_Width = Clipper_offcut_tole.SheetEntity.GetFieldValueAsDouble("_WIDTH");
+                             Clipper_offcut_tole.Sheet_Weight = Clipper_offcut_tole.SheetEntity.GetFieldValueAsDouble("_WEIGHT");
+                             Clipper_offcut_tole.Sheet_EmfFile = SimplifiedMethods.GetPreview(Clipper_offcut_tole.SheetEntity);
+                             Clipper_offcut_tole.Sheet_Is_rotated = IS_ROTATED;
+                             /////
+                             if (offcut != null)
+                             {
+                                 ////stock 
+                                 Clipper_offcut_tole.StockEntity = offcut;
+                                 ///////on egalise la multiplicité avec celle de la tole mere (a verifier si fiable)
+                                 Clipper_offcut_tole.Mutliplicity = Tole_Nesting.Mutliplicity;
+                                 Clipper_offcut_tole.Stock_Name = offcut.GetFieldValueAsString("_NAME");
+                                 Clipper_offcut_tole.Stock_Coulee = offcut.GetFieldValueAsString("_HEAT_NUMBER");
+                                 Clipper_offcut_tole.Stock_qte_initiale = offcut.GetFieldValueAsInt("_QUANTITY");
+                                 Clipper_offcut_tole.Stock_qte_reservee = offcut.GetFieldValueAsInt("_BOOKED_QUANTITY");
+                                 Clipper_offcut_tole.Stock_qte_Utilisee = offcut.GetFieldValueAsInt("_USED_QUANTITY");
+
+                                 Clipper_offcut_tole.no_Offcuts = false;
+                                 Clipper_offcut_tole.Sheet_Is_rotated = IS_ROTATED;
+                                 //////
+
+                               Clipper_Offcut_Infos_List.Add(Clipper_offcut_tole);
+                             }
+                             else { Clipper_offcut_tole.no_Offcuts = true; }
+                         }
+                     }
+
+                 }
+             }
+
+             public  void Get_Clipper_PartInfos()
+             {
+                 //Nested_Part_Infos_List = new List<Nested_PartInfo>();
+                 Clipper_Part_Infos_List = new List<Clipper_Nested_PartInfo>();
+                 IEntity current_nesting;
+
+                 current_nesting = Nesting;
+
+                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                 ///PARTS///
+                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                 //nested Parts-lists--> nestedpartinfos
+                 //on recherche les parts pointant sur le nesting//
+                 IEntityList clipper_nestedparts = null;
+
+                 //si stock managé on regarde les pieces placées sur la tole, sinn, sur le nesting
+                 //Actcut.ActcutModel.ActcutModelOptions.IsManagePartSet(contextlocal)…..stock managé, on regarde ls tocut reference sinon les proprités du nesting
+                 if (Actcut.CommonModel.ActcutModelOptions.IsManageStock(current_nesting.Context))
+                 {
+                     clipper_nestedparts = current_nesting.Context.EntityManager.GetEntityList("_TO_CUT_REFERENCE", "_TO_CUT_SHEET", ConditionOperator.Equal, current_nesting.Id);
+                     clipper_nestedparts.Fill(false);
+                 }
+                 else
+                 {
+                     clipper_nestedparts = current_nesting.Context.EntityManager.GetEntityList("_NESTED_REFERENCE", "_NESTING", ConditionOperator.Equal, current_nesting.Id);
+                     clipper_nestedparts.Fill(false);
+                 }
+
+
+                 foreach (IEntity clipper_nestedpart in clipper_nestedparts)
+                 {///recuperation de la liste des pieces
+                     Get_Clipper_NestedPartInfos(clipper_nestedpart);
+                 }
+
+             }
+
+             public override  void ComputeNestInfosCalculus()
+             {
+                 //
+                 int accuracy = 5; //nombre de chiffre apres la virgule
+                 //calcul de la surface total des chutes
+                 Calculus_Offcuts_Total_Surface = 0;
+                 Calculus_Offcuts_Total_Weight = 0;
+
+                 if (Clipper_Offcut_Infos_List != null)
+                 {
+
+                     Calculus_Offcuts_Total_Surface = Clipper_Offcut_Infos_List.Sum(o => o.Sheet_Surface);
+                     Calculus_Offcuts_Total_Weight = Clipper_Offcut_Infos_List.Sum(o => o.Sheet_Weight);
+                 }
+
+
+
+                 Calculus_Parts_Total_Surface = Clipper_Part_Infos_List.Sum(o => o.Surface * o.Nested_Quantity);
+
+                 //calculus
+
+                 if ((Tole_Nesting.Sheet_Total_Surface - Calculus_Offcuts_Total_Surface) != 0)
+                 {
+                     Calculus_Ratio_Consommation = (((Tole_Nesting.Sheet_Total_Surface - Calculus_Offcuts_Total_Surface) * Tole_Nesting.Mutliplicity) / Calculus_Parts_Total_Surface);
+                 }
+
+                 //eciture des poids corrigés
+                 foreach (Nested_PartInfo p in Clipper_Part_Infos_List)
+                 {
+                     if (Calculus_Ratio_Consommation != 0)
+                     {
+                         p.Ratio_Consommation = Calculus_Ratio_Consommation;
+                         p.Part_Balanced_Weight = Math.Round(p.Weight * Calculus_Ratio_Consommation, accuracy);
+                         p.Part_Balanced_Surface = Math.Round(p.Surface * Calculus_Ratio_Consommation, accuracy);
+                         Calculus_CheckSum += p.Weight * Calculus_Ratio_Consommation * p.Nested_Quantity;
+                         p.Part_Total_Nested_Weight = p.Part_Balanced_Weight * p.Nested_Quantity;
+                         p.Part_Total_Nested_Weight_ratio = p.Part_Total_Nested_Weight / Calculus_Offcuts_Total_Weight;
+
+                     }
+                     else
+                     {
+                         p.Ratio_Consommation = 1;
+                         p.Part_Balanced_Weight = p.Weight;
+                         p.Part_Balanced_Surface = p.Surface;
+                         p.Part_Total_Nested_Weight = p.Weight * 1 * p.Nested_Quantity;
+                         Calculus_CheckSum = 0;
+
+                     }
+                 }
+
+
+                 //checksum des poids
+                 Calculus_CheckSum = Calculus_CheckSum - (Tole_Nesting.Sheet_Weight - Calculus_Offcuts_Total_Weight);
+
+                 //if (Calculus_CheckSum - (Tole_Nesting.Sheet_Weight - Calculus_Offcuts_Total_Weight) < 1)
+                 if (Math.Round(Calculus_CheckSum, accuracy) == 1)
+                 {
+                     Calculus_CheckSum_OK = true;
+                 }
+
+
+
+             }
+
+
+             /// <summary>
+             /// calcul de laliste des pieces placée dans le placement
+             /// atention, les pieces fantome ne sont pas prise en compte
+             /// </summary>
+             /// <param name="clipper_nestedpart"></param>
+             public void Get_Clipper_NestedPartInfos(IEntity nestedpart)
+             {
+                 //piece par toles
+
+                 IEntity machinable_Part = null;
+                 IEntity to_produce_reference = null;
+
+                 Clipper_Nested_PartInfo clipper_nested_Part_Infos = new Clipper_Nested_PartInfo();
+                 //
+
+
+                 clipper_nested_Part_Infos.Part_To_Produce_IEntity = nestedpart.GetFieldValueAsEntity("_TO_PRODUCE_REFERENCE");
+                 //on set matiere et epaisseur a celle du nesting
+                 clipper_nested_Part_Infos.Material_Id = Tole_Nesting.Material_Id; //   Sheet_Material_Id;
+                 clipper_nested_Part_Infos.Material_Name = Tole_Nesting.MaterialName; //  Sheet_MaterialName;
+                 clipper_nested_Part_Infos.Thickness = Tole_Nesting.Thickness; //Sheet_Thickness;
+
+                 //recuperation des infos du part to produce
+
+                 clipper_nested_Part_Infos.Part_Time = nestedpart.GetFieldValueAsDouble("_TOTALTIME");
+                 clipper_nested_Part_Infos.Nested_Quantity = nestedpart.GetFieldValueAsLong("_QUANTITY");
+                 clipper_nested_Part_Infos.Nested_Quantity = nestedpart.GetFieldValueAsLong("_QUANTITY");
+                 //repercution des infos de machinable part
+                 machinable_Part = nestedpart.GetFieldValueAsEntity("_MACHINABLE_PART");
+                 clipper_nested_Part_Infos.Surface = machinable_Part.GetFieldValueAsDouble("_SURFACE");
+                 clipper_nested_Part_Infos.Part_Total_Nested_Weight = clipper_nested_Part_Infos.Surface * clipper_nested_Part_Infos.Nested_Quantity;
+                 clipper_nested_Part_Infos.SurfaceBrute = machinable_Part.GetFieldValueAsDouble("_SURFEXT");
+                 clipper_nested_Part_Infos.Weight = machinable_Part.GetFieldValueAsDouble("_WEIGHT");
+                 clipper_nested_Part_Infos.Part_Total_Nested_Weight = clipper_nested_Part_Infos.Weight * clipper_nested_Part_Infos.Nested_Quantity;
+                 //nested_Part_Infos.EmfFile = machinable_Part.GetImageFieldValueAsLinkFile("_PREVIEW");
+                 //nested_Part_Infos.EmfFile = SimplifiedMethods.GetPreview(@machinable_Part.GetImageFieldValueAsLinkFile("_PREVIEW"), machinable_Part);
+                 clipper_nested_Part_Infos.EmfFile = SimplifiedMethods.GetPreview(machinable_Part);
+                 clipper_nested_Part_Infos.Width = machinable_Part.GetFieldValueAsDouble("_DIMENS1");
+                 clipper_nested_Part_Infos.Height = machinable_Part.GetFieldValueAsDouble("_DIMENS2");
+
+                 //reference to produce
+                 to_produce_reference = nestedpart.GetFieldValueAsEntity("_TO_PRODUCE_REFERENCE");
+                 clipper_nested_Part_Infos.Part_Reference = to_produce_reference.GetFieldValueAsString("_NAME");
+                 clipper_nested_Part_Infos.Part_Name = to_produce_reference.GetFieldValueAsString("_NAME");
+                 //custom_Fields
+                 //Nested_Part_Info.Custom_Nested_Part_Infos
+
+                 //nested_Part_Infos.c
+                 //ajout des methodes specifiques
+                 //Get_NestedPart_CustomInfos(to_produce_reference, clipper_nested_Part_Infos);
+
+
+
+                 clipper_nested_Part_Infos.AFFAIRE = to_produce_reference.GetFieldValueAsString("AFFAIRE"); 
+                 clipper_nested_Part_Infos.CENTREFRAISSUIV = to_produce_reference.GetFieldValueAsString("CENTREFRAISSUIV");
+                 clipper_nested_Part_Infos.DELAIS_INT = to_produce_reference.GetFieldValueAsString("DELAIS_INT");
+                 clipper_nested_Part_Infos.ECOQTY = to_produce_reference.GetFieldValueAsInt("ECOQTY");
+                 clipper_nested_Part_Infos.EN_PERE_PIECE = to_produce_reference.GetFieldValueAsString("EN_PERE_PIECE");
+                 clipper_nested_Part_Infos.FAMILY = to_produce_reference.GetFieldValueAsString("FAMILY");
+                 clipper_nested_Part_Infos.IDLNROUT = to_produce_reference.GetFieldValueAsString("IDLNROUT");
+                 clipper_nested_Part_Infos.STARTDATE=to_produce_reference.GetFieldValueAsDateTime("STARTDATE");
+                 clipper_nested_Part_Infos.ENDDATE=to_produce_reference.GetFieldValueAsDateTime("ENDDATE");
+                 clipper_nested_Part_Infos.IDLNBOM = to_produce_reference.GetFieldValueAsString("IDLNBOM");
+                 clipper_nested_Part_Infos.PLAN = to_produce_reference.GetFieldValueAsString("PLAN");
+                 clipper_nested_Part_Infos.IDMAT = to_produce_reference.GetFieldValueAsString("IDMAT");
+                 clipper_nested_Part_Infos.EN_RANG = to_produce_reference.GetFieldValueAsString("EN_RANG");
+                 clipper_nested_Part_Infos.FORMATCLIP = to_produce_reference.GetFieldValueAsString("FORMATCLIP");
+                 clipper_nested_Part_Infos.GEOMETRY_FROM_OF = to_produce_reference.GetFieldValueAsString("GEOMETRY_FROM_OF");
+                 clipper_nested_Part_Infos.MACHINE_FROM_CF = to_produce_reference.GetFieldValueAsString("MACHINE_FROM_CF");
+                 clipper_nested_Part_Infos.LEVQA = to_produce_reference.GetFieldValueAsString("LEVQA");
+                 clipper_nested_Part_Infos.MATERIAL_CLIPPER = to_produce_reference.GetFieldValueAsString("MATERIAL_CLIPPER");
+                 clipper_nested_Part_Infos.NEED_PREP = to_produce_reference.GetFieldValueAsBoolean("NEED_PREP"); 
+                 clipper_nested_Part_Infos.NUMMAG = to_produce_reference.GetFieldValueAsString("NUMMAG");
+                 clipper_nested_Part_Infos.OF_IMPORT_NUMBER = to_produce_reference.GetFieldValueAsString("OF_IMPORT_NUMBER");
+                 clipper_nested_Part_Infos.SANS_DT = to_produce_reference.GetFieldValueAsBoolean("SANS_DT"); 
+
+
+
+
+
+
+
+
+                 //clipper_nested_Part_Infos. = to_produce_reference.GetFieldValueAsString("_NAME");
+
+
+
+
+
+
+                 //calcul de la surface total des pieces
+                 //on ne somme que les pieces qui ont un uid gpao (numero de gamme ou autre..)
+                 if (clipper_nested_Part_Infos.Part_IsGpao == true)
+                 {
+                     Calculus_Parts_Total_Surface += clipper_nested_Part_Infos.Surface * clipper_nested_Part_Infos.Nested_Quantity;
+                     Calculus_Parts_Total_Weight += clipper_nested_Part_Infos.Weight * clipper_nested_Part_Infos.Nested_Quantity;
+                     Calculus_Parts_Total_Time += clipper_nested_Part_Infos.Part_Time * clipper_nested_Part_Infos.Nested_Quantity;
+                     //ajout à la liste les pieces qui ne sont pas de sieces fantomes
+                     Clipper_Part_Infos_List.Add(clipper_nested_Part_Infos);
+                 }
+
+                 //tole
+
+
+
+
+
+             }
+
+
+
+
+
+
+         }
+
+         public class Clipper_Nested_PartInfo : Nested_PartInfo
+         {
+            public string AFFAIRE="";
+             public string CENTREFRAISSUIV = "";
+             public string DELAIS_INT = "";
+             public double ECOQTY =0;
+             public  string EN_PERE_PIECE = "";
+             public string FAMILY = "";
+             public string IDLNROUT = "";
+             public DateTime STARTDATE;
+             public DateTime ENDDATE;
+             public string IDLNBOM = "";
+             public string PLAN = "";
+             public string IDMAT = "";
+             public string EN_RANG = "";
+             public string FORMATCLIP = "";
+             public string GEOMETRY_FROM_OF = "";
+             public string MACHINE_FROM_CF = "";
+             public string LEVQA = "";
+             public string MATERIAL_CLIPPER = "";
+             public bool NEED_PREP = true;
+             public string NUMMAG = "";
+             public string OF_IMPORT_NUMBER = "";
+             public bool SANS_DT = false;
+
+
+
+
+         }
+         */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;

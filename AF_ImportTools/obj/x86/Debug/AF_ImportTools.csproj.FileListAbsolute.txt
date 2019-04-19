@@ -1,6 +1,3 @@
-C:\AlmaCAM\Bin\AF_ImportTools.cs
-C:\AlmaCAM\Bin\AF_ImportTools.dll
-C:\AlmaCAM\Bin\AF_ImportTools.pdb
 C:\Users\debimard\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.Properties.Resources.resources
 C:\Users\debimard\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.csproj.GenerateResource.Cache
 C:\Users\debimard\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CoreCompileInputs.cache
@@ -12,8 +9,20 @@ C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Deb
 C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CoreCompileInputs.cache
 C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.dll
 C:\Users\alma\source\DEV\SP3\CLIPPER\Interface_generique\ImportTools\obj\x86\Debug\AF_ImportTools.pdb
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.Properties.Resources.resources
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.GenerateResource.cache
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CoreCompileInputs.cache
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CopyComplete
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.dll
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.pdb
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csprojResolveAssemblyReference.cache
+C:\AlmaCAM\Bin\AF_ImportTools.cs
+C:\AlmaCAM\Bin\AF_ImportTools.dll
+C:\AlmaCAM\Bin\AF_ImportTools.pdb
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.Properties.Resources.resources
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.GenerateResource.cache
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CoreCompileInputs.cache
+C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CopyComplete
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.dll
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.pdb
+C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csprojAssemblyReference.cache

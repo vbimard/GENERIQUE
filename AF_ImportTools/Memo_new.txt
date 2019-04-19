@@ -1,0 +1,16 @@
+﻿			try
+            {
+           
+               
+                return true;
+
+             }
+            catch (Exception ie)
+            {
+                System.Windows.Forms.MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + " : " + ie.Message);
+                return false;
+            }
+
+            finally
+            { }
+

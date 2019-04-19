@@ -59,5 +59,42 @@ namespace AF_ImportTools.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Icon semblable à (Icône).
+        /// </summary>
+        internal static System.Drawing.Icon AlmaCamIco {
+            get {
+                object obj = ResourceManager.GetObject("AlmaCamIco", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à using System;
+        ///using System.IO;
+        ///using System.Collections.Generic;
+        ///using Wpm.Schema.Kernel;
+        ///using Wpm.Implement.Manager;
+        ///using Wpm.Implement.ModelSetting;
+        ///using Alma.BaseUI.DescriptionEditor;
+        ///
+        ///namespace Wpm.Implement.ModelSetting
+        ///{
+        ///    public partial class ImportUserEntityType : ScriptModelCustomization, IScriptModelCustomization
+        ///    {
+        ///        public override bool Execute(IContext context, IContext hostContext)
+        ///        {
+        ///            
+        ///           
+        ///            #region Stock
+        ///            
+        ///        [le reste de la chaîne a été tronqué]&quot;;.
+        /// </summary>
+        internal static string test_Entities {
+            get {
+                return ResourceManager.GetString("test_Entities", resourceCulture);
+            }
+        }
     }
 }
