@@ -3361,26 +3361,21 @@ public static class Machine_Info
         /// <returns></returns>
         public static string GetNestingTechnologyName(long technologyid)
         {
-            string result;
+            string result = "undef";
             try
             {
-                string text = "undef";
-                TechnoTypeInfo.GetAllTechnoType();
-                foreach (KeyValuePair<long, string> current in TechnoTypeInfo.GetAllTechnoType())
+                foreach (KeyValuePair<long, string> current in TechnoTypeInfo.GetCutMachineTechnoTypeList())
                 {
-                    bool flag = current.Key == technologyid;
-                    if (flag)
+                    if(current.Key == technologyid)
                     {
-                        text = current.Value;
+                        result = current.Value;
                         break;
                     }
                 }
-                result = text;
             }
             catch (Exception ex)
             {
                 Alma_Log.Write_Log("Pas de type techno detecté " + ex.Message);
-                result = "undef";
             }
             return result;
         }

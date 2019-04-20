@@ -1,0 +1,5 @@
+[BASE]
+PathForUpdate="\\alma-files\Technique-AS\SOFT\AlmaCam\Template\Clipper\DEBUG_CLIPPER\debug_DLL"
+Pathalmacam="C:\AlmaCam\Bin"
+PathToEditor="C:\AlmaCam\Bin\Wpm.Implement.Editor.exe"
+LastUpdate =""
