@@ -25,3 +25,12 @@ C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.c
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CopyComplete
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.dll
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.pdb
+C:\AlmaCAM\Bin\AF_ImportTools.cs
+C:\AlmaCAM\Bin\AF_ImportTools.dll
+C:\AlmaCAM\Bin\AF_ImportTools.pdb
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.Properties.Resources.resources
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.GenerateResource.cache
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CoreCompileInputs.cache
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.dll
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.pdb
+C:\Users\alma\source\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csprojResolveAssemblyReference.cache
