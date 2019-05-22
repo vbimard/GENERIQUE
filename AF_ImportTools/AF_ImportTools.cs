@@ -2168,7 +2168,7 @@ namespace AF_ImportTools
             Get_associated_Sheet_Type.Add("_TO_CUT_NESTING", "_TO_CUT_SHEET");
 
             //recuperation de la liste des toles coupées
-            //string stage = Entity.EntityType.Key;Get_associated_Sheet_Type[stage]
+          
             IEntityList state_sheets;
 
             state_sheets = contextlocal.EntityManager.GetEntityList("_TO_CUT_SHEET", "_TO_CUT_NESTING", ConditionOperator.Equal, nesting.Id);
@@ -5330,6 +5330,7 @@ public static class Machine_Info
 
         public  void WriteLogWarningEvent(string EventToLog)
         {
+
            EventLog.WriteEntry(wLog, EventToLog, EventLogEntryType.Warning);
 
         }
@@ -5556,7 +5557,7 @@ public static class Machine_Info
             public static void Info(string message, string module)
             {
             Trace.WriteLineIf(LogType == Log_Type.verbose, string.Format("{0}:{1}", message, module));
-             }
+            }
             //ecriture dans le log non verbeu
             public static void Write_Log_Important(string message)
             {
@@ -6006,12 +6007,7 @@ public static class Machine_Info
                 ///on regarde si le stock existe
                 if (GetStockFromToCutSheet(Sheet,ToCutSheet,activatesheet) == null)
                 {
-                    
                     newStock = CreateStockFromToCutSheet(Sheet, ToCutSheet, Nesting.GetFieldValueAsString("_NAME"),activatesheet);
-
-                    //desormais creer par le stock manager
-                    
-
                 }
                 else
                 {  //on renevoie le stock de sheet et de stockname=idsheettocut
@@ -6408,13 +6404,27 @@ public static class Machine_Info
                 else{
 
                     //suppression des fichiers sur les placement n'ayant pas de chute
-                    string str = nestingToCut.GetFieldValueAsEntity("_STOCK").GetFieldValueAsString("AF_GPAO_FILE");
-                    if (File.Exists(str))
-                        File.Delete(str); 
+                //string curent_nestingname = nestingToCut.GetFieldValueAsEntity("_TO_CUT_NESTING").GetFieldValueAsString("_NAME");
+                    IEntityList to_cut_sheet_list = contextlocal.EntityManager.GetEntityList("_TO_CUT_SHEET","_TO_CUT_NESTING",ConditionOperator.Equal,nestingToCut.Id);
+                    to_cut_sheet_list.Fill(false);
+
+                        if (to_cut_sheet_list.Count() > 0)
+                        {
+
+                            foreach (IEntity to_cut_sheet in to_cut_sheet_list)
+                            {
+                                string str = to_cut_sheet.GetFieldValueAsEntity("_STOCK").GetFieldValueAsString("AF_GPAO_FILE");
+                                if (File.Exists(str))
+                                    File.Delete(str);
+                            }
+                          
+
+                        }
+
+                    }
 
 
 
-                }
 
 
 
@@ -6423,12 +6433,9 @@ public static class Machine_Info
 
 
 
-             
 
 
-
-
-                               IEntity nesting = nestingToCut;
+                IEntity nesting = nestingToCut;
                                 string nestingname = nesting.GetFieldValueAsString("_NAME");
                                 IEntityList _stockList = nesting.Context.EntityManager.GetEntityList("_STOCK");
                                 _stockList.Fill(false);
@@ -7382,7 +7389,7 @@ public static class Machine_Info
 
         {
             MessageBox.Show("InsufficientStockSelectionException : La quantité de Tole selectionnée pour produire ce placement est insuffisante, le fichier de retour ne sera pas généré.");
-            Environment.Exit(0);
+           
         }
     }
 

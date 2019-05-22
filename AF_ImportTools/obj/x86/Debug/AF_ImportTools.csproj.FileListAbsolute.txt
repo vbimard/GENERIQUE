@@ -25,4 +25,3 @@ C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.c
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csproj.CopyComplete
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.dll
 C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.pdb
-C:\Users\alma\source\DEV\GENERIQUE\AF_ImportTools\obj\x86\Debug\AF_ImportTools.csprojAssemblyReference.cache

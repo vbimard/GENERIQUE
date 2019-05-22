@@ -24,7 +24,7 @@ namespace ShortCut
 
                
                 sw= File.CreateText(inifile);
-                sw.Write(Resource1.ShorCut);
+                sw.Write(AlmaCam_Update.Resource1.ShorCut);
                 sw.Close();
                 sw.Dispose();
 
@@ -44,12 +44,12 @@ namespace ShortCut
                 string[] filePaths = Directory.GetFiles(PathForUpdate);
                 foreach (var filename in filePaths)
                 {
-                    string file = filename.ToString();
+                    string @file = filename.ToString();
 
                     {
-                        string dlltoupdate = Path.Combine(Pathalmacam, Path.GetFileName(file));
-                        if (Tools.Updatedll(file, dlltoupdate))
-                            File.Copy(file, Pathalmacam +"\\"+ Path.GetFileName(file),true);
+                        string dlltoupdate = Path.Combine(@Pathalmacam, Path.GetFileName(@file));
+                        if (Tools.Updatedll(@file, @dlltoupdate))
+                            File.Copy(@file, @Pathalmacam +"\\"+ Path.GetFileName(file),true);
                     }
                 }
 
@@ -64,8 +64,14 @@ namespace ShortCut
             }
             catch (Exception e)
             {
-                throw;
-            }          
+                Console.WriteLine (e.Message);
+                Console.ReadKey();
+                
+            }
+            finally
+            {
+              
+            }
 
         }
 
@@ -83,36 +89,46 @@ namespace ShortCut
         public static bool Updatedll(string new_dll_fullPath, string dll_to_update_fullPath)
         {
             bool rst = true;
-            DateTime dtdest=default(DateTime); long dest = 0;
-            long source = 0; DateTime dtsource= default(DateTime);
+         
+            long dest = 0;
+            long source = 0;
+       
           
             string newPath = Path.GetFullPath(new_dll_fullPath);
-
-            if (File.Exists(dll_to_update_fullPath))
+            string str = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            if (File.Exists(dll_to_update_fullPath) )
             {
-                    dtdest = File.GetLastWriteTime(dll_to_update_fullPath);
-                    dest = dtdest.Ticks;
+                var dtdest = File.GetLastWriteTime(@dll_to_update_fullPath);
+                    dest = (Int64) dtdest.Ticks;
 
-                    dtsource = File.GetLastWriteTime(new_dll_fullPath);
-                    source= dtsource.Ticks;            
-            }
+                var dtsource = File.GetLastWriteTime(@new_dll_fullPath);
+                    source= (Int64) dtsource.Ticks;
+
+
+                if (source <= dest || Path.GetFileName(new_dll_fullPath) == str)
+                { rst = false; }
+                else
+                {//on ecrit le logPath.GetDirectoryName(new_dll_fullPath) + "\\" + "Update_historique.txt"
+
+
+                    using (StreamWriter historic = new StreamWriter(Path.GetDirectoryName(new_dll_fullPath) + "\\" + "Update_historique.txt", true))
+                    {
+                        string machine = "[ " + System.Environment.MachineName + " ]";
+
+                        historic.WriteLine(".." + machine + dll_to_update_fullPath + " date source : {" + dtsource + "} date dest : {" + dtdest + "}");
+                        historic.Close();
+                        historic.Dispose();
+
+                    }
+
+
+
+
+                }
             
 
 
-            if (source <= dest)
-            { rst = false; }
-            else
-            {//on ecrit le logPath.GetDirectoryName(new_dll_fullPath) + "\\" + "Update_historique.txt"
-
-
-                using (StreamWriter historic = new StreamWriter(Path.GetDirectoryName(new_dll_fullPath) + "\\" + "Update_historique.txt", true))               {
-                 string machine = "[ " + System.Environment.MachineName + " ]";
-                
-                historic.WriteLine(".."+machine + dll_to_update_fullPath+" date source : {"+ dtsource +"} date dest : {"+dtdest+"}");
-                historic.Close();
-                historic.Dispose();
-
-                }
+           
               
                
 

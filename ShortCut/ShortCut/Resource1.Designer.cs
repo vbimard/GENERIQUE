@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShortCut {
+namespace AlmaCam_Update {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ShortCut {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ShortCut.Resource1", typeof(Resource1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlmaCam_Update.Resource1", typeof(Resource1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,11 @@ namespace ShortCut {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Recherche une chaîne localisée semblable à [BASE]
+        ///PathForUpdate=&quot;\\alma-files\Technique-AS\SOFT\AlmaCam\Template\Clipper\DEBUG_CLIPPER\debug_DLL&quot;
+        ///Pathalmacam=&quot;C:\AlmaCam\Bin&quot;
+        ///PathToEditor=&quot;C:\AlmaCam\Bin\Wpm.Implement.Editor.exe&quot;
+        ///LastUpdate =&quot;&quot;.
         /// </summary>
         internal static string ShorCut {
             get {
